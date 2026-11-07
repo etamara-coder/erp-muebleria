@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso al Sistema · Mueblería Artesanal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Estilos específicos de la pantalla de login */
+    .login-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: radial-gradient(circle at 50% 20%, #f4ece4 0%, #ebe1d5 100%);
+    }
+
+    .login-card {
+      background-color: var(--bg-card);
+      width: 100%;
+      max-width: 440px;
+      border-radius: var(--radio-lg);
+      border: 1px solid var(--borde-suave);
+      box-shadow: var(--sombra-lg);
+      overflow: hidden;
+      border-top: 6px solid var(--madera-media);
+    }
+
+    .login-header {
+      padding: 32px 28px 20px;
+      text-align: center;
+      background: linear-gradient(180deg, #ffffff 0%, var(--bg-principal) 100%);
+      border-bottom: 1px solid var(--borde-suave);
+    }
+
+    .login-logo {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 12px;
+      display: block;
+    }
+
+    .login-title {
+      font-size: 1.4rem;
+      color: var(--madera-oscura);
+      margin-bottom: 4px;
+    }
+
+    .login-subtitle {
+      font-size: 0.875rem;
+      color: var(--texto-secundario);
+    }
+
+    .login-body {
+      padding: 28px;
+    }
+
+    .demo-bar {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px dashed var(--borde-fuerte);
+      text-align: center;
+    }
+
+    .demo-bar-title {
+      font-size: 0.8125rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--texto-apagado);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .demo-buttons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrapper">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="assets/img/logo.svg" alt="Logotipo Mueblería" class="login-logo">
+        <h1 class="login-title">Mueblería Artesanal</h1>
+        <p class="login-subtitle">Sistema de Gestión de Taller y Sucursales</p>
+      </div>
+
+      <div class="login-body">
+        <form id="form-login">
+          <div class="form-group">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              class="form-input" 
+              placeholder="tu-correo@muebleria.com" 
+              required
+              autocomplete="email"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">Contraseña</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              class="form-input" 
+              placeholder="••••••••" 
+              required
+              autocomplete="current-password"
+            >
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">
+            Iniciar Sesión
+          </button>
+        </form>
+
+        <div class="alerta alerta-info mt-3" style="font-size: 0.8125rem;">
+          <span>🔒 <strong>Acceso protegido:</strong> El registro público está deshabilitado. Las cuentas son creadas por la administración.</span>
+        </div>
+
+        <!-- Botones de Acceso Rápido para Pruebas en Fase 1 -->
+        <div class="demo-bar">
+          <p class="demo-bar-title">Probar Vistas de la Fase 1 (Maqueta)</p>
+          <div class="demo-buttons-grid">
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-demo-admin">
+              👑 Vista Admin
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="btn-demo-empleado">
+              🪚 Vista Empleado
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { iniciarSesionDemo } from './js/auth.js';
+
+    document.getElementById('btn-demo-admin').addEventListener('click', () => {
+      iniciarSesionDemo('admin');
+    });
+
+    document.getElementById('btn-demo-empleado').addEventListener('click', () => {
+      iniciarSesionDemo('empleado');
+    });
+
+    document.getElementById('form-login').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value.toLowerCase();
+      // Simulación según el correo ingresado
+      if (email.includes('empleado') || email.includes('taller')) {
+        iniciarSesionDemo('empleado');
+      } else {
+        iniciarSesionDemo('admin');
+      }
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,373 @@
+/* =====================================================================
+   EMPLEADO.CSS · Estilos específicos para la Vista de Empleado (Taller)
+   Diseñado 100% para celular y ambiente de taller:
+   - Solo 2 secciones: Mis Tareas e Inventario de mi sucursal.
+   - Botones táctiles extra grandes (52px+).
+   - Tipografía visible a distancia.
+   - Modales simples tipo tarjeta / bottom-sheet.
+   - SIN tabla de movimientos.
+   ===================================================================== */
+
+/* Contenedor de Vista Empleado */
+.empleado-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-principal);
+  max-width: 680px; /* Ancho óptimo tipo app móvil/tablet de taller */
+  margin: 0 auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Cabecera Móvil de Taller */
+.empleado-header {
+  background-color: var(--madera-oscura);
+  color: var(--texto-blanco);
+  padding: 16px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 3px solid var(--cuero-acento);
+}
+
+.empleado-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.empleado-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.empleado-logo-icon {
+  width: 36px;
+  height: 36px;
+  background-color: var(--cuero-acento);
+  border-radius: var(--radio-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.empleado-titulo-app {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.empleado-subtitulo-app {
+  font-size: 0.75rem;
+  color: var(--borde-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.empleado-info-bar {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: var(--radio-md);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.empleado-usuario {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.empleado-sucursal-badge {
+  background-color: var(--madera-dorada);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: var(--radio-sm);
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Barra de Navegación de 2 Pestañas Grandes */
+.empleado-nav-tabs {
+  display: flex;
+  background-color: #ffffff;
+  border-bottom: 2px solid var(--borde-suave);
+  position: sticky;
+  top: 96px;
+  z-index: 90;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.empleado-tab-btn {
+  flex: 1;
+  min-height: 54px;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--texto-secundario);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-bottom: 4px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.empleado-tab-btn.activo {
+  color: var(--madera-media);
+  border-bottom-color: var(--madera-media);
+  background-color: var(--bg-secundario);
+}
+
+.tab-badge-contador {
+  background-color: var(--madera-clara);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+/* Contenido Principal */
+.empleado-main {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.empleado-seccion {
+  display: none;
+}
+
+.empleado-seccion.activo {
+  display: block;
+}
+
+/* Encabezado de Sección */
+.seccion-header-taller {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.seccion-header-taller h2 {
+  font-size: 1.25rem;
+  color: var(--madera-oscura);
+}
+
+.seccion-header-taller span {
+  font-size: 0.875rem;
+  color: var(--texto-secundario);
+}
+
+/* =====================================================================
+   SECCIÓN 1: MIS TAREAS (Tarjetas Grandes de Taller)
+   ===================================================================== */
+.tareas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tarea-card {
+  background-color: var(--bg-card);
+  border: 2px solid var(--borde-suave);
+  border-radius: var(--radio-lg);
+  padding: 18px;
+  box-shadow: var(--sombra-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.tarea-card.pendiente {
+  border-left: 6px solid #f97316;
+}
+
+.tarea-card.en_progreso {
+  border-left: 6px solid #eab308;
+  background-color: #fffdf7;
+}
+
+.tarea-card.completada {
+  border-left: 6px solid #16a34a;
+  opacity: 0.75;
+}
+
+.tarea-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tarea-titulo {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--madera-oscura);
+  line-height: 1.3;
+}
+
+.tarea-desc {
+  font-size: 0.95rem;
+  color: var(--texto-secundario);
+  line-height: 1.4;
+}
+
+.tarea-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.8125rem;
+  color: var(--texto-apagado);
+  flex-wrap: wrap;
+}
+
+.tarea-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tarea-acciones {
+  margin-top: 4px;
+}
+
+/* =====================================================================
+   SECCIÓN 2: INVENTARIO DE MI SUCURSAL (Tarjetas de Piezas Físicas)
+   ===================================================================== */
+.inventario-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inventario-filtro-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+.filtro-chip {
+  background-color: #ffffff;
+  border: 1.5px solid var(--borde-fuerte);
+  color: var(--texto-secundario);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filtro-chip.activo {
+  background-color: var(--madera-media);
+  color: #fff;
+  border-color: var(--madera-oscura);
+}
+
+.pieza-card {
+  background-color: var(--bg-card);
+  border: 2px solid var(--borde-suave);
+  border-radius: var(--radio-lg);
+  padding: 18px;
+  box-shadow: var(--sombra-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pieza-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pieza-codigo {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--texto-apagado);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pieza-nombre {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--madera-oscura);
+  line-height: 1.25;
+}
+
+.pieza-detalles-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  background-color: var(--bg-secundario);
+  padding: 10px 14px;
+  border-radius: var(--radio-md);
+  font-size: 0.875rem;
+}
+
+.pieza-detalle-label {
+  color: var(--texto-secundario);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.pieza-detalle-val {
+  color: var(--madera-oscura);
+  font-weight: 700;
+}
+
+/* Botoneras Táctiles Grandes para Celular en Taller (52px de altura) */
+.pieza-acciones-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pieza-acciones-grid .btn-full {
+  grid-column: 1 / -1;
+}
+
+.btn-taller {
+  min-height: 52px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 12px 14px;
+  box-shadow: var(--sombra-sm);
+}
+
+.btn-taller:active {
+  transform: scale(0.97);
+}
+
+/* Pieza Enviada o Sin Acciones */
+.pieza-finalizada-msg {
+  text-align: center;
+  padding: 10px;
+  background-color: var(--bg-secundario);
+  border-radius: var(--radio-md);
+  color: var(--texto-secundario);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+

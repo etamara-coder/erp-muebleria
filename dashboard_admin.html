@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración · Mueblería Artesanal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-layout">
+
+  <!-- ===================================================================
+       CABECERA SUPERIOR CON SELECTOR DE SUCURSAL
+       =================================================================== -->
+  <header class="admin-header">
+    <div class="header-container">
+      <div class="brand-area">
+        <img src="assets/img/logo.svg" alt="Logo" style="width: 38px; height: 38px;">
+        <div>
+          <div class="brand-title">Mueblería Artesanal</div>
+          <div class="brand-subtitle">Panel de Control Gerencial</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- Selector de Sucursal Global -->
+        <div class="sucursal-selector-wrapper">
+          <label for="sucursal-filtro-global">📍 Sucursal Activa:</label>
+          <select id="sucursal-filtro-global" class="sucursal-select">
+            <option value="todas">Todas las Sucursales (Vista Global)</option>
+            <option value="suc-001" selected>Taller Central - Cedro</option>
+            <option value="suc-002">Showroom Norte - Nogal</option>
+            <option value="suc-003">Almacén Sur - Roble</option>
+          </select>
+        </div>
+
+        <!-- Usuario Administrador y Salir -->
+        <div class="admin-user-pill">
+          <div class="user-avatar" title="Administrador">FM</div>
+          <span id="admin-user-name" style="font-weight: 600;">Don Fernando (Jefe)</span>
+        </div>
+
+        <button id="btn-logout" class="btn btn-secondary btn-sm" title="Cerrar Sesión">
+          🚪 Salir
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================
+       CONTENIDO PRINCIPAL
+       =================================================================== -->
+  <main class="admin-main">
+
+    <!-- KPI CARDS / RESUMEN Y NOVEDADES -->
+    <section class="kpi-grid">
+      <div class="kpi-card kpi-produccion">
+        <div class="kpi-header">
+          <span class="kpi-title">En Producción</span>
+          <span class="kpi-icon">🪚</span>
+        </div>
+        <div class="kpi-value">14</div>
+        <div class="kpi-footer">Piezas en banco de trabajo y pulido</div>
+      </div>
+
+      <div class="kpi-card kpi-stock">
+        <div class="kpi-header">
+          <span class="kpi-title">Stock Disponible</span>
+          <span class="kpi-icon">🪵</span>
+        </div>
+        <div class="kpi-value">38</div>
+        <div class="kpi-footer">Piezas listas para venta inmediata</div>
+      </div>
+
+      <div class="kpi-card kpi-ventas">
+        <div class="kpi-header">
+          <span class="kpi-title">Ventas del Mes</span>
+          <span class="kpi-icon">💰</span>
+        </div>
+        <div class="kpi-value">26</div>
+        <div class="kpi-footer">$34.850.000 COP facturados</div>
+      </div>
+
+      <div class="kpi-card kpi-tareas">
+        <div class="kpi-header">
+          <span class="kpi-title">Tareas de Taller</span>
+          <span class="kpi-icon">📋</span>
+        </div>
+        <div class="kpi-value">7</div>
+        <div class="kpi-footer">3 pendientes · 4 en progreso</div>
+      </div>
+    </section>
+
+    <!-- PESTAÑAS DE NAVEGACIÓN -->
+    <nav class="admin-tabs" aria-label="Módulos de administración">
+      <button class="tab-btn activo" data-tab="tab-catalogo">
+        🪑 Catálogo de Productos
+      </button>
+      <button class="tab-btn" data-tab="tab-inventario">
+        📦 Inventario & Lotes
+      </button>
+      <button class="tab-btn" data-tab="tab-tareas">
+        🔨 Asignar Tareas
+      </button>
+      <button class="tab-btn" data-tab="tab-movimientos">
+        📜 Tabla de Movimientos
+      </button>
+    </nav>
+
+    <!-- =================================================================
+         PESTAÑA 1: CATÁLOGO DE PRODUCTOS (CRUD)
+         ================================================================= -->
+    <section id="tab-catalogo" class="tab-content activo">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Catálogo de Productos y Diseños</h2>
+          <p class="text-muted">Diseños maestros y especificaciones de maderas nobles</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-primary" onclick="abrirModal('modal-nuevo-producto')">
+            + Nuevo Producto al Catálogo
+          </button>
+        </div>
+      </div>
+
+      <div class="productos-grid">
+        <!-- Producto 1 -->
+        <article class="producto-card">
+          <div class="producto-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1615066390971-03e4e1c36ddf?auto=format&fit=crop&w=600&q=80" alt="Mesa de Comedor Roble" class="producto-img">
+            <span class="producto-badge-madera">Roble Macizo</span>
+          </div>
+          <div class="producto-body">
+            <span class="producto-categoria">Comedores</span>
+            <h3 class="producto-nombre">Mesa Rústica 6 Puestos</h3>
+            <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 8px;">Acabado natural poliuretano mate, patas reforzadas.</p>
+            <div class="producto-precio">$ 1.850.000 COP</div>
+            <div class="producto-footer">
+              <button class="btn btn-secondary btn-sm" style="flex: 1;">Editar</button>
+              <button class="btn btn-outline btn-sm" style="color: #b91c1c; border-color: #fca5a5;">Desactivar</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 2 -->
+        <article class="producto-card">
+          <div class="producto-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=600&q=80" alt="Silla Comedor Cedro" class="producto-img">
+            <span class="producto-badge-madera">Cedro Caoba</span>
+          </div>
+          <div class="producto-body">
+            <span class="producto-categoria">Sillas y Asientos</span>
+            <h3 class="producto-nombre">Silla Ergonómica Clásica</h3>
+            <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 8px;">Espaldar curvo anatómico con ensamble de cola de milano.</p>
+            <div class="producto-precio">$ 290.000 COP</div>
+            <div class="producto-footer">
+              <button class="btn btn-secondary btn-sm" style="flex: 1;">Editar</button>
+              <button class="btn btn-outline btn-sm" style="color: #b91c1c; border-color: #fca5a5;">Desactivar</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 3 -->
+        <article class="producto-card">
+          <div class="producto-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1594627914902-b05423b49747?auto=format&fit=crop&w=600&q=80" alt="Biblioteca Nogal" class="producto-img">
+            <span class="producto-badge-madera">Nogal Negro</span>
+          </div>
+          <div class="producto-body">
+            <span class="producto-categoria">Bibliotecas y Estantes</span>
+            <h3 class="producto-nombre">Biblioteca Modular 5 Niveles</h3>
+            <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 8px;">Madera seleccionada de veta pronunciada y repisas de 2 pulg.</p>
+            <div class="producto-precio">$ 2.400.000 COP</div>
+            <div class="producto-footer">
+              <button class="btn btn-secondary btn-sm" style="flex: 1;">Editar</button>
+              <button class="btn btn-outline btn-sm" style="color: #b91c1c; border-color: #fca5a5;">Desactivar</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Producto 4 -->
+        <article class="producto-card">
+          <div class="producto-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1532372320572-cda25653a26d?auto=format&fit=crop&w=600&q=80" alt="Mesita de Noche Pino" class="producto-img">
+            <span class="producto-badge-madera">Pino Canadiense</span>
+          </div>
+          <div class="producto-body">
+            <span class="producto-categoria">Dormitorio</span>
+            <h3 class="producto-nombre">Mesita de Noche con Cajón Oculto</h3>
+            <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 8px;">Correderas telescópicas y tirador metálico envejecido.</p>
+            <div class="producto-precio">$ 420.000 COP</div>
+            <div class="producto-footer">
+              <button class="btn btn-secondary btn-sm" style="flex: 1;">Editar</button>
+              <button class="btn btn-outline btn-sm" style="color: #b91c1c; border-color: #fca5a5;">Desactivar</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PESTAÑA 2: INVENTARIO FÍSICO Y ALTA DE LOTES
+         ================================================================= -->
+    <section id="tab-inventario" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Control de Inventario Pieza por Pieza</h2>
+          <p class="text-muted">Ciclo de vida: En Producción ➔ Disponible ➔ Vendido ➔ Enviado</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-warning" onclick="abrirModal('modal-registrar-entrada')">
+            + Alta de Lote en Inventario
+          </button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>ID Pieza</th>
+              <th>Mueble / Producto</th>
+              <th>Madera</th>
+              <th>Sucursal Actual</th>
+              <th>Estado</th>
+              <th>Fecha Ingreso</th>
+              <th>Acciones de Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>INV-1024</code></td>
+              <td><strong>Mesa Rústica 6 Puestos</strong></td>
+              <td>Roble Macizo</td>
+              <td>Taller Central - Cedro</td>
+              <td><span class="badge badge-produccion">En Producción</span></td>
+              <td>05/11/2026</td>
+              <td>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-success btn-sm" onclick="alert('Se marcará como DISPONIBLE')">Terminar Prod.</button>
+                  <button class="btn btn-secondary btn-sm" onclick="abrirModal('modal-trasladar-admin')">Trasladar</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>INV-1025</code></td>
+              <td><strong>Mesa Rústica 6 Puestos</strong></td>
+              <td>Roble Macizo</td>
+              <td>Showroom Norte - Nogal</td>
+              <td><span class="badge badge-disponible">Disponible</span></td>
+              <td>02/11/2026</td>
+              <td>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary btn-sm" onclick="abrirModal('modal-vender-admin')">Vender</button>
+                  <button class="btn btn-secondary btn-sm" onclick="abrirModal('modal-trasladar-admin')">Trasladar</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>INV-1026</code></td>
+              <td><strong>Silla Ergonómica Clásica</strong></td>
+              <td>Cedro Caoba</td>
+              <td>Showroom Norte - Nogal</td>
+              <td><span class="badge badge-disponible">Disponible</span></td>
+              <td>03/11/2026</td>
+              <td>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-primary btn-sm" onclick="abrirModal('modal-vender-admin')">Vender</button>
+                  <button class="btn btn-secondary btn-sm" onclick="abrirModal('modal-trasladar-admin')">Trasladar</button>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>INV-1027</code></td>
+              <td><strong>Biblioteca Modular 5 Niveles</strong></td>
+              <td>Nogal Negro</td>
+              <td>Taller Central - Cedro</td>
+              <td><span class="badge badge-vendido">Vendido</span></td>
+              <td>28/10/2026</td>
+              <td>
+                <button class="btn btn-purple btn-sm" onclick="alert('Se registrará el ENVÍO al cliente.')">Registrar Envío</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td><code>INV-1028</code></td>
+              <td><strong>Mesita de Noche con Cajón</strong></td>
+              <td>Pino Canadiense</td>
+              <td>Almacén Sur - Roble</td>
+              <td><span class="badge badge-enviado">Enviado</span></td>
+              <td>25/10/2026</td>
+              <td>
+                <span class="text-muted" style="font-size: 0.8125rem;">Entregado al cliente</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PESTAÑA 3: ASIGNAR TAREAS
+         ================================================================= -->
+    <section id="tab-tareas" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Asignación y Seguimiento de Tareas</h2>
+          <p class="text-muted">Control de trabajo para operarios y carpinteros en cada taller</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-primary" onclick="abrirModal('modal-nueva-tarea')">
+            + Asignar Nueva Tarea
+          </button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Tarea / Trabajo</th>
+              <th>Asignado a</th>
+              <th>Sucursal / Taller</th>
+              <th>Estado</th>
+              <th>Fecha Límite</th>
+              <th>Creado por</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>Cepillado y ensamble de mesa de roble #INV-1024</strong>
+                <div class="text-muted" style="font-size: 0.8125rem;">Aplicar sellador base y espigar las 4 patas</div>
+              </td>
+              <td>Carlos Ruiz (Ebanista)</td>
+              <td>Taller Central - Cedro</td>
+              <td><span class="badge badge-progreso">En Progreso</span></td>
+              <td><strong>09/11/2026</strong></td>
+              <td>Don Fernando</td>
+            </tr>
+
+            <tr>
+              <td>
+                <strong>Lijado fino y laqueado de 6 sillas de cedro</strong>
+                <div class="text-muted" style="font-size: 0.8125rem;">Lija grano 320 y 400 antes de laca transparente</div>
+              </td>
+              <td>Andrés Gómez (Lijador)</td>
+              <td>Taller Central - Cedro</td>
+              <td><span class="badge badge-pendiente">Pendiente</span></td>
+              <td><strong>11/11/2026</strong></td>
+              <td>Don Fernando</td>
+            </tr>
+
+            <tr>
+              <td>
+                <strong>Instalación de correderas en cajón oculto</strong>
+                <div class="text-muted" style="font-size: 0.8125rem;">Ajuste suave y verificación de cierre magnético</div>
+              </td>
+              <td>Carlos Ruiz (Ebanista)</td>
+              <td>Taller Central - Cedro</td>
+              <td><span class="badge badge-completada">Completada</span></td>
+              <td>04/11/2026</td>
+              <td>Don Fernando</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =================================================================
+         PESTAÑA 4: TABLA DE MOVIMIENTOS (AUDITORÍA EXCLUSIVA ADMIN)
+         ================================================================= -->
+    <section id="tab-movimientos" class="tab-content">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Historial y Auditoría de Movimientos</h2>
+          <p class="text-muted">Registro inmutable de entradas, traslados, ventas, envíos y ajustes</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-secondary btn-sm" onclick="alert('Exportando reporte CSV...')">
+            📥 Exportar Movimientos
+          </button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Fecha / Hora</th>
+              <th>Tipo de Operación</th>
+              <th>Pieza / Producto</th>
+              <th>Origen</th>
+              <th>Destino</th>
+              <th>Usuario Responsable</th>
+              <th>Precio Final</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>07/11/2026 14:30</td>
+              <td><span class="mov-badge mov-venta">Venta</span></td>
+              <td>INV-1027 (Biblioteca Modular)</td>
+              <td>Taller Central - Cedro</td>
+              <td>— (Cliente Final)</td>
+              <td>Don Fernando Morales</td>
+              <td><strong>$ 2.350.000 COP</strong></td>
+            </tr>
+
+            <tr>
+              <td>06/11/2026 11:15</td>
+              <td><span class="mov-badge mov-traslado">Traslado</span></td>
+              <td>INV-1025 (Mesa Rústica Roble)</td>
+              <td>Taller Central - Cedro</td>
+              <td>Showroom Norte - Nogal</td>
+              <td>Carlos Ruiz</td>
+              <td>—</td>
+            </tr>
+
+            <tr>
+              <td>05/11/2026 09:00</td>
+              <td><span class="mov-badge mov-entrada">Entrada</span></td>
+              <td>INV-1024 (Lote de 3 mesas)</td>
+              <td>— (Producción)</td>
+              <td>Taller Central - Cedro</td>
+              <td>Don Fernando Morales</td>
+              <td>—</td>
+            </tr>
+
+            <tr>
+              <td>04/11/2026 16:45</td>
+              <td><span class="mov-badge mov-envio">Envío</span></td>
+              <td>INV-1020 (Aparador Castaño)</td>
+              <td>Almacén Sur - Roble</td>
+              <td>— (Domicilio Cliente)</td>
+              <td>Don Fernando Morales</td>
+              <td>—</td>
+            </tr>
+
+            <tr>
+              <td>03/11/2026 10:20</td>
+              <td><span class="mov-badge mov-ajuste">Ajuste</span></td>
+              <td>INV-1022 (Silla Ergonómica)</td>
+              <td>Taller Central - Cedro</td>
+              <td>— (Fin de Producción)</td>
+              <td>Carlos Ruiz</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================
+       MODALES LIMPIOS PARA FORMULARIOS
+       =================================================================== -->
+
+  <!-- Modal: Nuevo Producto -->
+  <div id="modal-nuevo-producto" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>+ Registrar Nuevo Producto en Catálogo</h3>
+        <button class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <form id="form-nuevo-producto">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="prod-nombre" class="form-label">Nombre del Producto / Modelo</label>
+            <input type="text" id="prod-nombre" class="form-input" placeholder="Ej. Mesa de Centro Japandi" required>
+          </div>
+
+          <div class="form-group">
+            <label for="prod-categoria" class="form-label">Categoría</label>
+            <select id="prod-categoria" class="form-select" required>
+              <option value="">Selecciona categoría...</option>
+              <option value="Comedores">Comedores</option>
+              <option value="Sillas y Asientos">Sillas y Asientos</option>
+              <option value="Bibliotecas y Estantes">Bibliotecas y Estantes</option>
+              <option value="Dormitorio">Dormitorio</option>
+              <option value="Accesorios y Decoración">Accesorios y Decoración</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="prod-madera" class="form-label">Tipo de Madera Principal</label>
+            <input type="text" id="prod-madera" class="form-input" placeholder="Ej. Roble Francés, Cedro, Teca, Nogal" required>
+          </div>
+
+          <div class="form-group">
+            <label for="prod-precio" class="form-label">Precio Base sugerido (COP)</label>
+            <input type="number" id="prod-precio" class="form-input" placeholder="Ej. 1200000" min="0" step="10000" required>
+          </div>
+
+          <div class="form-group">
+            <label for="prod-foto" class="form-label">URL de la Foto (Bucket fotos-productos)</label>
+            <input type="url" id="prod-foto" class="form-input" placeholder="https://ejemplo.com/foto-mueble.jpg">
+            <span class="form-help">En la Fase 2 podrás subir archivos directamente al Storage de Supabase.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal>Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar Producto</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Registrar Entrada de Lote (Solo Admin) -->
+  <div id="modal-registrar-entrada" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>+ Alta de Lote en Inventario</h3>
+        <button class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <form id="form-registrar-entrada">
+        <div class="modal-body">
+          <div class="alerta alerta-info" style="font-size: 0.8125rem;">
+            <span>ℹ️ Se creará una fila por cada pieza física individual y su correspondiente movimiento de entrada.</span>
+          </div>
+
+          <div class="form-group">
+            <label for="lote-producto" class="form-label">Producto del Catálogo</label>
+            <select id="lote-producto" class="form-select" required>
+              <option value="">Selecciona el producto...</option>
+              <option value="p1">Mesa Rústica 6 Puestos (Roble)</option>
+              <option value="p2">Silla Ergonómica Clásica (Cedro)</option>
+              <option value="p3">Biblioteca Modular 5 Niveles (Nogal)</option>
+              <option value="p4">Mesita de Noche con Cajón (Pino)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="lote-sucursal" class="form-label">Sucursal de Destino</label>
+            <select id="lote-sucursal" class="form-select" required>
+              <option value="suc-001">Taller Central - Cedro</option>
+              <option value="suc-002">Showroom Norte - Nogal</option>
+              <option value="suc-003">Almacén Sur - Roble</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="lote-estado" class="form-label">Estado Inicial de las Piezas</label>
+            <select id="lote-estado" class="form-select" required>
+              <option value="disponible">Disponible (Lista para venta)</option>
+              <option value="en_produccion">En Producción (Requiere trabajo en taller)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="lote-cantidad" class="form-label">Cantidad de Piezas (1 a 100)</label>
+            <input type="number" id="lote-cantidad" class="form-input" value="1" min="1" max="100" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal>Cancelar</button>
+          <button type="submit" class="btn btn-warning">Crear Lote</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Asignar Nueva Tarea -->
+  <div id="modal-nueva-tarea" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>+ Asignar Nueva Tarea al Taller</h3>
+        <button class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <form id="form-nueva-tarea">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="tarea-titulo" class="form-label">Título de la Tarea</label>
+            <input type="text" id="tarea-titulo" class="form-input" placeholder="Ej. Torneado de 4 patas para mesa de nogal" required>
+          </div>
+
+          <div class="form-group">
+            <label for="tarea-desc" class="form-label">Descripción e Instrucciones</label>
+            <textarea id="tarea-desc" class="form-textarea" rows="3" placeholder="Detalles de ensamblado, medidas, tipo de lija o acabado requerido..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="tarea-empleado" class="form-label">Empleado Asignado</label>
+            <select id="tarea-empleado" class="form-select" required>
+              <option value="">Selecciona operario...</option>
+              <option value="emp-1">Carlos Ruiz (Ebanista Principal)</option>
+              <option value="emp-2">Andrés Gómez (Lijador y Acabados)</option>
+              <option value="emp-3">Mateo Herrera (Armador)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="tarea-sucursal" class="form-label">Sucursal / Taller</label>
+            <select id="tarea-sucursal" class="form-select" required>
+              <option value="suc-001">Taller Central - Cedro</option>
+              <option value="suc-002">Showroom Norte - Nogal</option>
+              <option value="suc-003">Almacén Sur - Roble</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="tarea-fecha" class="form-label">Fecha Límite</label>
+            <input type="date" id="tarea-fecha" class="form-input" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal>Cancelar</button>
+          <button type="submit" class="btn btn-primary">Asignar Tarea</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Vender Pieza (Admin) -->
+  <div id="modal-vender-admin" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>💰 Registrar Venta de Pieza</h3>
+        <button class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <form id="form-vender-admin">
+        <div class="modal-body">
+          <p class="mb-3">Transición de estado: <strong>Disponible ➔ Vendido</strong></p>
+          <div class="form-group">
+            <label for="venta-admin-precio" class="form-label">Precio Final Acordado (COP)</label>
+            <input type="number" id="venta-admin-precio" class="form-input" placeholder="Ej. 1850000" min="0" required>
+            <span class="form-help">Este monto quedará asentado en el historial de movimientos de auditoría.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal>Cancelar</button>
+          <button type="submit" class="btn btn-success">Confirmar Venta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Trasladar Pieza (Admin) -->
+  <div id="modal-trasladar-admin" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>🚚 Trasladar Pieza entre Sucursales</h3>
+        <button class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <form id="form-trasladar-admin">
+        <div class="modal-body">
+          <p class="mb-3">Selecciona la sucursal que recibirá físicamente esta pieza de madera:</p>
+          <div class="form-group">
+            <label for="traslado-admin-destino" class="form-label">Sucursal Destino</label>
+            <select id="traslado-admin-destino" class="form-select" required>
+              <option value="suc-002">Showroom Norte - Nogal</option>
+              <option value="suc-003">Almacén Sur - Roble</option>
+              <option value="suc-001">Taller Central - Cedro</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-close-modal>Cancelar</button>
+          <button type="submit" class="btn btn-warning">Ejecutar Traslado</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script modular de administración -->
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
+

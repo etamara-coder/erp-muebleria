@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Panel de Taller · Vista Empleado</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/empleado.css">
+</head>
+<body class="empleado-layout">
+
+  <!-- ===================================================================
+       CABECERA MÓVIL OPTIMIZADA PARA TALLER
+       =================================================================== -->
+  <header class="empleado-header">
+    <div class="empleado-header-top">
+      <div class="empleado-brand">
+        <img src="assets/img/logo.svg" alt="Logo" style="width: 34px; height: 34px;">
+        <div>
+          <div class="empleado-titulo-app">Mueblería Artesanal</div>
+          <div class="empleado-subtitulo-app">Panel Operativo de Taller</div>
+        </div>
+      </div>
+      <button id="btn-logout-empleado" class="btn btn-secondary btn-sm" title="Cerrar sesión">
+        🚪 Salir
+      </button>
+    </div>
+
+    <!-- Barra de Contexto del Operario -->
+    <div class="empleado-info-bar">
+      <div class="empleado-usuario">
+        <span>👤</span>
+        <span id="empleado-user-name">Carlos Ruiz (Ebanista)</span>
+      </div>
+      <div class="empleado-sucursal-badge">
+        📍 <span id="empleado-sucursal-name">Taller Central - Cedro</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================================================================
+       BARRA DE NAVEGACIÓN: ÚNICAMENTE DOS SECCIONES
+       =================================================================== -->
+  <nav class="empleado-nav-tabs" aria-label="Secciones del taller">
+    <button class="empleado-tab-btn activo" data-seccion="tareas">
+      🔨 Mis Tareas
+      <span class="tab-badge-contador">2</span>
+    </button>
+    <button class="empleado-tab-btn" data-seccion="inventario">
+      🪵 Inventario de mi sucursal
+      <span class="tab-badge-contador">5</span>
+    </button>
+  </nav>
+
+  <!-- ===================================================================
+       CONTENIDO PRINCIPAL
+       =================================================================== -->
+  <main class="empleado-main">
+
+    <!-- ===============================================================
+         SECCIÓN 1: MIS TAREAS
+         =============================================================== -->
+    <section id="seccion-tareas" class="empleado-seccion activo">
+      <div class="seccion-header-taller">
+        <h2>Trabajos Asignados a Mí</h2>
+        <span>Prioridad de taller</span>
+      </div>
+
+      <div class="tareas-lista">
+
+        <!-- Tarea 1: Pendiente -->
+        <article class="tarea-card pendiente" id="tarea-1">
+          <div class="tarea-card-top">
+            <h3 class="tarea-titulo">Cepillado y espigado de mesa de roble</h3>
+            <span class="badge badge-pendiente">Pendiente</span>
+          </div>
+          <p class="tarea-desc">
+            Cepillar los tablones superiores a 2 pulgadas y realizar ensambles de caja y espiga en las 4 patas principales.
+          </p>
+          <div class="tarea-meta">
+            <div class="tarea-meta-item">
+              📅 Límite: <strong>09/11/2026</strong>
+            </div>
+            <div class="tarea-meta-item">
+              🏷️ Ref: <strong>Pieza INV-1024</strong>
+            </div>
+          </div>
+          <div class="tarea-acciones">
+            <button class="btn btn-warning btn-lg btn-block btn-taller" data-accion="iniciar-tarea">
+              ▶ Iniciar Trabajo de Carpintería
+            </button>
+          </div>
+        </article>
+
+        <!-- Tarea 2: En Progreso -->
+        <article class="tarea-card en_progreso" id="tarea-2">
+          <div class="tarea-card-top">
+            <h3 class="tarea-titulo">Lijado fino y sellado de sillas de cedro</h3>
+            <span class="badge badge-progreso">En Progreso</span>
+          </div>
+          <p class="tarea-desc">
+            Pasar lija de grano 240 y 320 en los respaldos curvos. Aplicar primera mano de sellador nitrocelulósico mate.
+          </p>
+          <div class="tarea-meta">
+            <div class="tarea-meta-item">
+              📅 Límite: <strong>Hoy antes de las 5:00 PM</strong>
+            </div>
+            <div class="tarea-meta-item">
+              🏷️ Cantidad: <strong>4 unidades</strong>
+            </div>
+          </div>
+          <div class="tarea-acciones">
+            <button class="btn btn-success btn-lg btn-block btn-taller" data-accion="completar-tarea">
+              ✓ Marcar como Completada
+            </button>
+          </div>
+        </article>
+
+        <!-- Tarea 3: Completada -->
+        <article class="tarea-card completada" id="tarea-3">
+          <div class="tarea-card-top">
+            <h3 class="tarea-titulo">Instalación de correderas en mesita de noche</h3>
+            <span class="badge badge-completada">Completada</span>
+          </div>
+          <p class="tarea-desc">
+            Correderas telescópicas montadas y alineadas con cierre suave magnético.
+          </p>
+          <div class="tarea-meta">
+            <div class="tarea-meta-item">
+              ✓ Finalizada el: 06/11/2026 a las 16:30
+            </div>
+          </div>
+          <div class="alerta alerta-exito text-center" style="margin: 0; font-size: 0.875rem;">
+            ✓ Trabajo verificado y aprobado por jefe de taller
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ===============================================================
+         SECCIÓN 2: INVENTARIO DE MI SUCURSAL
+         =============================================================== -->
+    <section id="seccion-inventario" class="empleado-seccion">
+      <div class="seccion-header-taller">
+        <h2>Piezas Físicas en este Taller</h2>
+        <span>Control por pieza física</span>
+      </div>
+
+      <!-- Filtro rápido por estado táctil -->
+      <div class="inventario-filtro-bar">
+        <button class="filtro-chip activo" data-filtro="todos">Todos (5)</button>
+        <button class="filtro-chip" data-filtro="en_produccion">En Producción (1)</button>
+        <button class="filtro-chip" data-filtro="disponible">Disponibles (2)</button>
+        <button class="filtro-chip" data-filtro="vendido">Vendidos (1)</button>
+        <button class="filtro-chip" data-filtro="enviado">Enviados (1)</button>
+      </div>
+
+      <div class="inventario-lista">
+
+        <!-- Pieza 1: EN PRODUCCIÓN -->
+        <article class="pieza-card" id="pieza-inv-1024" data-estado="en_produccion">
+          <div class="pieza-card-header">
+            <div>
+              <span class="pieza-codigo">ID: INV-1024</span>
+              <h3 class="pieza-nombre">Mesa Rústica 6 Puestos</h3>
+            </div>
+            <span class="badge badge-produccion">En Producción</span>
+          </div>
+
+          <div class="pieza-detalles-grid">
+            <div>
+              <div class="pieza-detalle-label">Madera</div>
+              <div class="pieza-detalle-val">Roble Macizo</div>
+            </div>
+            <div>
+              <div class="pieza-detalle-label">Categoría</div>
+              <div class="pieza-detalle-val">Comedores</div>
+            </div>
+          </div>
+
+          <!-- Acciones táctiles según ciclo de vida -->
+          <div class="pieza-acciones-grid">
+            <button class="btn btn-success btn-lg btn-taller" data-accion="terminar-produccion">
+              🔨 Terminar producción
+            </button>
+            <button class="btn btn-warning btn-lg btn-taller" data-accion="abrir-traslado">
+              🚚 Trasladar
+            </button>
+          </div>
+        </article>
+
+        <!-- Pieza 2: DISPONIBLE -->
+        <article class="pieza-card" id="pieza-inv-1022" data-estado="disponible">
+          <div class="pieza-card-header">
+            <div>
+              <span class="pieza-codigo">ID: INV-1022</span>
+              <h3 class="pieza-nombre">Silla Ergonómica Clásica</h3>
+            </div>
+            <span class="badge badge-disponible">Disponible</span>
+          </div>
+
+          <div class="pieza-detalles-grid">
+            <div>
+              <div class="pieza-detalle-label">Madera</div>
+              <div class="pieza-detalle-val">Cedro Caoba</div>
+            </div>
+            <div>
+              <div class="pieza-detalle-label">Precio Base</div>
+              <div class="pieza-detalle-val">$ 290.000 COP</div>
+            </div>
+          </div>
+
+          <div class="pieza-acciones-grid">
+            <button class="btn btn-success btn-lg btn-taller" data-accion="abrir-venta">
+              💰 Vender
+            </button>
+            <button class="btn btn-warning btn-lg btn-taller" data-accion="abrir-traslado">
+              🚚 Trasladar
+            </button>
+          </div>
+        </article>
+
+        <!-- Pieza 3: DISPONIBLE -->
+        <article class="pieza-card" id="pieza-inv-1023" data-estado="disponible">
+          <div class="pieza-card-header">
+            <div>
+              <span class="pieza-codigo">ID: INV-1023</span>
+              <h3 class="pieza-nombre">Biblioteca Modular 5 Niveles</h3>
+            </div>
+            <span class="badge badge-disponible">Disponible</span>
+          </div>
+
+          <div class="pieza-detalles-grid">
+            <div>
+              <div class="pieza-detalle-label">Madera</div>
+              <div class="pieza-detalle-val">Nogal Negro</div>
+            </div>
+            <div>
+              <div class="pieza-detalle-label">Precio Base</div>
+              <div class="pieza-detalle-val">$ 2.400.000 COP</div>
+            </div>
+          </div>
+
+          <div class="pieza-acciones-grid">
+            <button class="btn btn-success btn-lg btn-taller" data-accion="abrir-venta">
+              💰 Vender
+            </button>
+            <button class="btn btn-warning btn-lg btn-taller" data-accion="abrir-traslado">
+              🚚 Trasladar
+            </button>
+          </div>
+        </article>
+
+        <!-- Pieza 4: VENDIDO -->
+        <article class="pieza-card" id="pieza-inv-1027" data-estado="vendido">
+          <div class="pieza-card-header">
+            <div>
+              <span class="pieza-codigo">ID: INV-1027</span>
+              <h3 class="pieza-nombre">Biblioteca Modular 5 Niveles</h3>
+            </div>
+            <span class="badge badge-vendido">Vendido</span>
+          </div>
+
+          <div class="pieza-detalles-grid">
+            <div>
+              <div class="pieza-detalle-label">Madera</div>
+              <div class="pieza-detalle-val">Nogal Negro</div>
+            </div>
+            <div>
+              <div class="pieza-detalle-label">Estado de Entrega</div>
+              <div class="pieza-detalle-val">Pendiente por despacho</div>
+            </div>
+          </div>
+
+          <div class="pieza-acciones-grid">
+            <button class="btn btn-purple btn-lg btn-block btn-full btn-taller" data-accion="enviar-cliente">
+              📦 Enviar al Cliente
+            </button>
+          </div>
+        </article>
+
+        <!-- Pieza 5: ENVIADO -->
+        <article class="pieza-card" id="pieza-inv-1028" data-estado="enviado">
+          <div class="pieza-card-header">
+            <div>
+              <span class="pieza-codigo">ID: INV-1028</span>
+              <h3 class="pieza-nombre">Mesita de Noche con Cajón</h3>
+            </div>
+            <span class="badge badge-enviado">Enviado</span>
+          </div>
+
+          <div class="pieza-detalles-grid">
+            <div>
+              <div class="pieza-detalle-label">Madera</div>
+              <div class="pieza-detalle-val">Pino Canadiense</div>
+            </div>
+            <div>
+              <div class="pieza-detalle-label">Estado Logístico</div>
+              <div class="pieza-detalle-val">Entregado / En ruta</div>
+            </div>
+          </div>
+
+          <div class="pieza-acciones-grid">
+            <div class="pieza-finalizada-msg btn-full">
+              ✓ Pieza despachada y en posesión del comprador
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================
+       MODALES LIMPIOS PARA CELULAR (VENDER Y TRASLADAR)
+       =================================================================== -->
+
+  <!-- Modal: Vender Pieza (Empleado) -->
+  <div id="modal-vender-empleado" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>💰 Registrar Venta de Mueble</h3>
+        <button class="modal-close" onclick="cerrarModalEmp('modal-vender-empleado')">&times;</button>
+      </div>
+      <form id="form-venta-empleado">
+        <div class="modal-body">
+          <div class="alerta alerta-info" style="font-size: 0.85rem;">
+            <span id="modal-venta-pieza-info">Pieza Seleccionada</span>
+          </div>
+
+          <div class="form-group">
+            <label for="input-precio-final" class="form-label">Precio Final Cobrado (COP)</label>
+            <input 
+              type="number" 
+              id="input-precio-final" 
+              class="form-input" 
+              placeholder="Ej. 1850000" 
+              min="0" 
+              step="1000" 
+              required
+            >
+            <span class="form-help">Ingresa el valor total pactado con el comprador.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-lg" onclick="cerrarModalEmp('modal-vender-empleado')">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-success btn-lg">
+            Confirmar Venta
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Trasladar Pieza (Empleado) -->
+  <div id="modal-trasladar-empleado" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3>🚚 Trasladar Mueble a otra Sucursal</h3>
+        <button class="modal-close" onclick="cerrarModalEmp('modal-trasladar-empleado')">&times;</button>
+      </div>
+      <form id="form-traslado-empleado">
+        <div class="modal-body">
+          <div class="alerta alerta-info" style="font-size: 0.85rem;">
+            <span id="modal-traslado-pieza-info">Pieza Seleccionada</span>
+          </div>
+
+          <div class="form-group">
+            <label for="select-sucursal-destino" class="form-label">Sucursal de Destino</label>
+            <select id="select-sucursal-destino" class="form-select" required>
+              <option value="">Selecciona sucursal destino...</option>
+              <option value="suc-002">Showroom Norte - Nogal</option>
+              <option value="suc-003">Almacén Sur - Roble</option>
+            </select>
+            <span class="form-help">La pieza se moverá del inventario de este taller hacia la sucursal seleccionada.</span>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-lg" onclick="cerrarModalEmp('modal-trasladar-empleado')">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-warning btn-lg">
+            Confirmar Traslado
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Script modular de empleado -->
+  <script type="module" src="js/empleado.js"></script>
+</body>
+</html>
+
