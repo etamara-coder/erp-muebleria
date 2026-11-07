@@ -15,8 +15,8 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 // Supabase > Project Settings > API (Project URL y anon public key).
 // La anon key es pública: la seguridad real la aplica RLS en la base.
 // ---------------------------------------------------------------------
-export const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
-export const SUPABASE_ANON_KEY = 'TU-ANON-KEY-AQUI';
+export const SUPABASE_URL = 'https://blnjvzjrulhvllpglelu.supabase.co';
+export const SUPABASE_ANON_KEY = 'sb_publishable_0LD0b3J2HcZ3VNTFfekj4w_g5NTRszQ';
 
 // Cliente único para toda la aplicación.
 // supabase-js se encarga de mantener y refrescar la sesión.
