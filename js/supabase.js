@@ -1,37 +1,28 @@
 /**
  * =====================================================================
- * SUPABASE.JS · Configuración del Cliente Supabase (ES Module)
+ * SUPABASE.JS · Cliente único de Supabase (ES Module)
  * =====================================================================
- * NOTA DE FASE 1:
- * En esta fase el maquetado utiliza datos locales de ejemplo sin conexión activa.
- * En la Fase 2 se habilitará el cliente con las credenciales de tu proyecto.
+ * Fase 2A: autenticación real con Supabase Auth.
  *
- * Versión fija del SDK por CDN: 2.45.4 (cumpliendo regla de no usar "latest")
+ * Versión fija del SDK por CDN: 2.45.4 (nunca "latest").
  */
 
-// Importación fijando versión exacta (preparado para Fase 2):
-// import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm';
 
-// Variables de entorno o configuración de Supabase:
-export const SUPABASE_CONFIG = {
-  url: 'https://TU-PROYECTO.supabase.co', // Reemplazar con la URL de tu proyecto
-  anonKey: 'TU-ANON-KEY-AQUI'             // Reemplazar con la clave pública anon
-};
+// ---------------------------------------------------------------------
+// Configuración del proyecto
+// Reemplaza estos dos valores por los de tu proyecto:
+// Supabase > Project Settings > API (Project URL y anon public key).
+// La anon key es pública: la seguridad real la aplica RLS en la base.
+// ---------------------------------------------------------------------
+export const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
+export const SUPABASE_ANON_KEY = 'TU-ANON-KEY-AQUI';
 
-// Instancia del cliente (se inicializará en Fase 2):
-export let supabase = null;
+// Cliente único para toda la aplicación.
+// supabase-js se encarga de mantener y refrescar la sesión.
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-/**
- * Inicializa la conexión con Supabase.
- * Se activará en la Fase 2 tras configurar credenciales.
- */
-export function inicializarSupabase() {
-  if (SUPABASE_CONFIG.url !== 'https://TU-PROYECTO.supabase.co' && window.createClient) {
-    // supabase = createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
-    console.info('Cliente Supabase inicializado');
-  } else {
-    console.info('Modo maqueta UI (Fase 1): Sin conexión a Supabase');
-  }
-  return supabase;
+// Aviso útil si todavía no se configuraron las credenciales.
+if (SUPABASE_URL.includes('TU-PROYECTO') || SUPABASE_ANON_KEY.includes('TU-ANON-KEY')) {
+  console.warn('⚠️ Configura SUPABASE_URL y SUPABASE_ANON_KEY en js/supabase.js');
 }
-

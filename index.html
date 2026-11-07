@@ -56,26 +56,8 @@
       padding: 28px;
     }
 
-    .demo-bar {
-      margin-top: 24px;
-      padding-top: 20px;
-      border-top: 1px dashed var(--borde-fuerte);
-      text-align: center;
-    }
-
-    .demo-bar-title {
-      font-size: 0.8125rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--texto-apagado);
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .demo-buttons-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
+    .login-error[hidden] {
+      display: none;
     }
   </style>
 </head>
@@ -90,6 +72,14 @@
       </div>
 
       <div class="login-body">
+        <div
+          id="login-error"
+          class="alerta alerta-error login-error"
+          role="alert"
+          aria-live="assertive"
+          hidden
+        ></div>
+
         <form id="form-login">
           <div class="form-group">
             <label for="email" class="form-label">Correo Electrónico</label>
@@ -117,7 +107,7 @@
             >
           </div>
 
-          <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">
+          <button type="submit" id="btn-login" class="btn btn-primary btn-lg btn-block mt-3">
             Iniciar Sesión
           </button>
         </form>
@@ -126,41 +116,59 @@
           <span>🔒 <strong>Acceso protegido:</strong> El registro público está deshabilitado. Las cuentas son creadas por la administración.</span>
         </div>
 
-        <!-- Botones de Acceso Rápido para Pruebas en Fase 1 -->
-        <div class="demo-bar">
-          <p class="demo-bar-title">Probar Vistas de la Fase 1 (Maqueta)</p>
-          <div class="demo-buttons-grid">
-            <button type="button" class="btn btn-secondary btn-sm" id="btn-demo-admin">
-              👑 Vista Admin
-            </button>
-            <button type="button" class="btn btn-secondary btn-sm" id="btn-demo-empleado">
-              🪚 Vista Empleado
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 
   <script type="module">
-    import { iniciarSesionDemo } from './js/auth.js';
+    import {
+      signInWithPassword,
+      verificarSesionActiva,
+      redirigirSegunRol
+    } from './js/auth.js';
 
-    document.getElementById('btn-demo-admin').addEventListener('click', () => {
-      iniciarSesionDemo('admin');
-    });
+    const formLogin = document.getElementById('form-login');
+    const errorBox = document.getElementById('login-error');
+    const btnLogin = document.getElementById('btn-login');
 
-    document.getElementById('btn-demo-empleado').addEventListener('click', () => {
-      iniciarSesionDemo('empleado');
-    });
+    function mostrarError(mensaje) {
+      errorBox.textContent = mensaje;
+      errorBox.hidden = false;
+    }
 
-    document.getElementById('form-login').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = document.getElementById('email').value.toLowerCase();
-      // Simulación según el correo ingresado
-      if (email.includes('empleado') || email.includes('taller')) {
-        iniciarSesionDemo('empleado');
-      } else {
-        iniciarSesionDemo('admin');
+    function ocultarError() {
+      errorBox.textContent = '';
+      errorBox.hidden = true;
+    }
+
+    // Si ya hay una sesión activa, evitamos mostrar el formulario de login.
+    verificarSesionActiva()
+      .then((perfil) => {
+        if (perfil) {
+          redirigirSegunRol(perfil);
+        }
+      })
+      .catch((error) => {
+        console.error('No se pudo comprobar la sesión:', error.message);
+      });
+
+    formLogin.addEventListener('submit', async (evento) => {
+      evento.preventDefault();
+      ocultarError();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      btnLogin.disabled = true;
+      btnLogin.textContent = 'Ingresando…';
+
+      try {
+        const perfil = await signInWithPassword(email, password);
+        redirigirSegunRol(perfil);
+      } catch (error) {
+        mostrarError(error.message || 'No se pudo iniciar sesión. Intenta de nuevo.');
+        btnLogin.disabled = false;
+        btnLogin.textContent = 'Iniciar Sesión';
       }
     });
   </script>
